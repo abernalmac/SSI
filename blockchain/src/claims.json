@@ -1,0 +1,34 @@
+[
+  {
+    "id": 0,
+    "title": "Over 18",
+    "name": "over-18",
+    "picture": "images/pegi18.png",
+    "validity": "∞",
+    "format": "basic"
+  },
+  {
+    "id": 1,
+    "title": "Municipality of birth",
+    "name": "birth-place",
+    "picture": "images/logo_barcelona.png",
+    "validity": "∞",
+    "format": "barcelona"
+  },
+  {
+    "id": 2,
+    "title": "Municipality of residence",
+    "name": "residence-place",
+    "picture": "images/logo_esplugues.jpg",
+    "validity": "1 year",
+    "format": "esplugues"
+  },
+  {
+    "id": 3,
+    "title": "University Degree",
+    "name": "university-degree",
+    "picture": "images/logo_upc.png",
+    "validity": "∞",
+    "format": "Informatics Engineering"
+  }
+]
