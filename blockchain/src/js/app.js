@@ -1,7 +1,7 @@
 App = {
   web3Provider: null,
   contracts: {},
-
+  
   init: async function() {
     // Load claims.
     $.getJSON('../claims.json', function(data) {
@@ -56,7 +56,7 @@ App = {
     
       // Set the provider for our contract
       App.contracts.Claim.setProvider(App.web3Provider);
-    
+
       // Use our contract to retrieve and mark the made claims
       return App.markClaimed();
     });
@@ -64,7 +64,6 @@ App = {
   },
 
   bindEvents: function() {
-    App.markClaimed();  
     $(document).on('click', '.btn-claim', App.handleClaim);
   },
 
@@ -83,7 +82,46 @@ App = {
       }).then(function(claimers) {
         for (i = 0; i < claimers.length; i++) {
           if (claimers[i] == account) {
-            $('.panel-claim').eq(i).find('button').text('Success').attr('disabled', true);
+            $('.panel-claim').eq(0).find('button').text('Success').attr('disabled', true);
+          }
+        }
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+      App.contracts.Claim.deployed().then(function(instance) {
+        ClaimInstance = instance;
+
+        return ClaimInstance.getBcnBornClaimers.call();
+      }).then(function(claimers) {
+        for (i = 0; i < claimers.length; i++) {
+          if (claimers[i] == account) {
+            $('.panel-claim').eq(1).find('button').text('Success').attr('disabled', true);
+          }
+        }
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+      App.contracts.Claim.deployed().then(function(instance) {
+        ClaimInstance = instance;
+
+        return ClaimInstance.getEspluguesResidentClaimers.call();
+      }).then(function(claimers) {
+        for (i = 0; i < claimers.length; i++) {
+          if (claimers[i] == account) {
+            $('.panel-claim').eq(2).find('button').text('Success').attr('disabled', true);
+          }
+        }
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+      App.contracts.Claim.deployed().then(function(instance) {
+        ClaimInstance = instance;
+
+        return ClaimInstance.getInformaticsEngineerClaimers.call();
+      }).then(function(claimers) {
+        for (i = 0; i < claimers.length; i++) {
+          if (claimers[i] == account) {
+            $('.panel-claim').eq(3).find('button').text('Success').attr('disabled', true);
           }
         }
       }).catch(function(err) {
@@ -93,18 +131,17 @@ App = {
   },
 
   handleClaim: function(event) {
-    event.preventDefault();
-
     var claimId = parseInt($(event.target).data('id'));
     var claimName;
     var claimValidity;
     var claimFormat;
+    var claimSignature;
     $.getJSON('../claims.json', function(data) {
-        claimName = data[i].name;
-        claimValidity = data[i].validity;
-        claimFormat = data[i].format;
+        claimName = data[claimId].name;
+        claimValidity = data[claimId].validity;
+        claimFormat = data[claimId].format;
+        claimSignature = data[claimId].signature;
     });
-
     var ClaimInstance;
 
     web3.eth.getAccounts(function(error, accounts) {
@@ -118,7 +155,7 @@ App = {
         ClaimInstance = instance;
 
         // Execute claim as a transaction by sending account
-        return ClaimInstance.claim(claimId, claimName, claimValidity, claimFormat, {from: account});
+        return ClaimInstance.claim(claimId, claimName, claimValidity, claimFormat, claimSignature, {from: account});
       }).then(function(result) {
         return App.markClaimed();
       }).catch(function(err) {

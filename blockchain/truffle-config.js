@@ -10,5 +10,10 @@ module.exports = {
     develop: {
       port: 8545
     }
+  },
+
+  dependencies: {
+    "buffer": "^6.0.3",
+    "crypto": "^1.0.1"
   }
 };

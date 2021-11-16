@@ -14,5 +14,10 @@
   "license": "ISC",
   "devDependencies": {
     "lite-server": "^2.3.0"
+  },
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.1.1"
   }
 }

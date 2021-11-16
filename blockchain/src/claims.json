@@ -5,7 +5,8 @@
     "name": "over-18",
     "picture": "images/pegi18.png",
     "validity": "∞",
-    "format": "basic"
+    "format": "basic",
+    "signature": "0xC05F1284A4C04043379856AAB4B9210FAC7736B36AFD10FD245E5DD0199281E0"
   },
   {
     "id": 1,
@@ -13,7 +14,8 @@
     "name": "birth-place",
     "picture": "images/logo_barcelona.png",
     "validity": "∞",
-    "format": "barcelona"
+    "format": "barcelona",
+    "signature": "0x4DACEFBEAD8925A84D852A3E8D477FE75CF17D741F5F2C8105AB8691B824B7A4"
   },
   {
     "id": 2,
@@ -21,7 +23,8 @@
     "name": "residence-place",
     "picture": "images/logo_esplugues.jpg",
     "validity": "1 year",
-    "format": "esplugues"
+    "format": "esplugues",
+    "signature": "0xAD3F5AE64D386810312CB745BC998CE3084599724A19A6669346770CFE3F47ED"
   },
   {
     "id": 3,
@@ -29,6 +32,7 @@
     "name": "university-degree",
     "picture": "images/logo_upc.png",
     "validity": "∞",
-    "format": "Informatics Engineering"
+    "format": "Informatics Engineering",
+    "signature": "0x64E7FBEB002A309E1545C08676169228C7704DDD72F1820A34331203C97AB520"
   }
 ]
