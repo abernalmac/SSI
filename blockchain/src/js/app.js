@@ -56,15 +56,20 @@ App = {
     
       // Set the provider for our contract
       App.contracts.Claim.setProvider(App.web3Provider);
-
       // Use our contract to retrieve and mark the made claims
       return App.markClaimed();
     });
+    var http;
+    $.getJSON('../http.json', function(data) {
+      http = data[0].id;
+    });
+    if (http != 5) App.handleHttpClaim();
     return App.bindEvents();
   },
 
   bindEvents: function() {
     $(document).on('click', '.btn-claim', App.handleClaim);
+    $(document).on('click', '.btn-http', App.handleHttpClaim);
   },
 
   markClaimed: function() {
@@ -162,9 +167,44 @@ App = {
         console.log(err.message);
       });
     });
-  }
+  },
 
+  handleHttpClaim: function() {
+    var claimId;
+    var claimName;
+    var claimValidity;
+    var claimFormat;
+    var claimSignature;
+    $.getJSON('../http.json', function(data) {
+        claimId = data[0].id;
+        claimName = data[0].name;
+        claimValidity = data[0].validity;
+        claimFormat = data[0].format;
+        claimSignature = data[0].signature;
+    });
+    var ClaimInstance;
+    web3.eth.getAccounts(function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+  
+      var account = accounts[0];
+  
+      App.contracts.Claim.deployed().then(function(instance) {
+        ClaimInstance = instance;
+  
+        // Execute claim as a transaction by sending account
+        return ClaimInstance.claim(claimId, claimName, claimValidity, claimFormat, claimSignature, {from: account});
+      }).then(function(result) {
+        return App.markClaimed();
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+    });
+  }
 };
+
+
 
 $(function() {
   $(window).load(function() {
