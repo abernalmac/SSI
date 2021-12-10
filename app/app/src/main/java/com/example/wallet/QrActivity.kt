@@ -21,6 +21,7 @@ import org.json.JSONObject
 
 
 class QrActivity : AppCompatActivity() {
+
     private var mCodeScanner: CodeScanner? = null
     private var cameraPermission = false
     private val CAMERA_PERM = 1
@@ -47,11 +48,6 @@ class QrActivity : AppCompatActivity() {
             mCodeScanner!!.setDecodeCallback { result ->
 
                 runOnUiThread {
-                    /*Toast.makeText(
-                        this@QrActivity,
-                        result.getText(),
-                        Toast.LENGTH_LONG
-                    ).show()*/
                 }
                 var url = result.getText() + "/get"
                 val queue = Volley.newRequestQueue(this)
@@ -61,7 +57,6 @@ class QrActivity : AppCompatActivity() {
                     Request.Method.GET, url,
                     { response ->
                         val str = response.toString()
-                        //Toast.makeText(this, str, Toast.LENGTH_SHORT).show()
                         val jsonObject = JSONObject(str)
                         url = url.replace("/get", jsonObject.get("url").toString()) + "?name=" + jsonObject.get("name").toString() + "&format=" + jsonObject.get("format").toString() + "&signature=" + findSignature(jsonObject)
                         val intent = Intent(this, HomeActivity::class.java)
