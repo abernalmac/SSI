@@ -14,8 +14,8 @@ const keyPair = crypto.generateKeyPairSync('rsa', {
         format: 'pem'
     },
     privateKeyEncoding: {
-    type: 'pkcs8',
-    format: 'pem'
+        type: 'pkcs8',
+        format: 'pem'
     }
 });
 fs.writeFileSync("private_key.pem", keyPair.privateKey);
