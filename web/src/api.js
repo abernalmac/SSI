@@ -33,7 +33,7 @@ const isVerified = crypto.verify(algorithm, data, publicKey, signature);
 console.log(`Is signature verified: ${isVerified}`);
 
 function comprovarSignature(req){
-    return (req.query.name == "over-18" && req.query.format == "basic" && req.query.signature == "0xC05F1284A4C04043379856AAB4B9210FAC7736B36AFD10FD245E5DD0199281E0" /*&& crypto.verify("SHA256", data, req.query.publicKey, req.query.userSignature)*/)
+    return crypto.verify(algorithm, data, publicKey, signature);
 }
 
 router.get('/get', (req,res) =>{
