@@ -20,7 +20,6 @@ const keyPair = crypto.generateKeyPairSync('rsa', {
 });
 fs.writeFileSync("private_key.pem", keyPair.privateKey);
 fs.writeFileSync("public_key.pem", keyPair.publicKey);
-const data = Buffer.from('{"name":"over-18","format":"basic","signature":"0xC05F1284A4C04043379856AAB4B9210FAC7736B36AFD10FD245E5DD0199281E0"}');
 const algorithm = "SHA256";
 const data = Buffer.from('{"name":"over-18","format":"basic","signature":"0xC05F1284A4C04043379856AAB4B9210FAC7736B36AFD10FD245E5DD0199281E0"}');
 const privateKey = fs.readFileSync("private_key.pem", "utf8");
@@ -33,6 +32,10 @@ const isVerified = crypto.verify(algorithm, data, publicKey, signature);
 console.log(`Is signature verified: ${isVerified}`);
 
 function comprovarSignature(req){
+    const algorithm = "SHA256";
+    const data = Buffer.from('{"name":"over-18","format":"basic","signature":"0xC05F1284A4C04043379856AAB4B9210FAC7736B36AFD10FD245E5DD0199281E0"}');
+    const privateKey = fs.readFileSync("private_key.pem", "utf8");
+    const publicKey = fs.readFileSync("public_key.pem", "utf8");
     return crypto.verify(algorithm, data, publicKey, signature);
 }
 
