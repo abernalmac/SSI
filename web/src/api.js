@@ -7,11 +7,30 @@ const app = express();
 const router = express.Router();
 
 var boolean = false
-
-const data = Buffer.from('{"name":"over-18","format":"basic","signature":"0xC05F1284A4C04043379856AAB4B9210FAC7736B36AFD10FD245E5DD0199281E0"}');
-/*const {privateKey, publicKey} = crypto.generateKeyPairSync('rsa', {
+const keyPair = crypto.generateKeyPairSync('rsa', {
     modulusLength: 2048,
-});*/
+    publicKeyEncoding: {
+        type: 'spki',
+        format: 'pem'
+    },
+    privateKeyEncoding: {
+    type: 'pkcs8',
+    format: 'pem'
+    }
+});
+fs.writeFileSync("private_key.pem", keyPair.privateKey);
+fs.writeFileSync("public_key.pem", keyPair.publicKey);
+const data = Buffer.from('{"name":"over-18","format":"basic","signature":"0xC05F1284A4C04043379856AAB4B9210FAC7736B36AFD10FD245E5DD0199281E0"}');
+const algorithm = "SHA256";
+const data = Buffer.from('{"name":"over-18","format":"basic","signature":"0xC05F1284A4C04043379856AAB4B9210FAC7736B36AFD10FD245E5DD0199281E0"}');
+const privateKey = fs.readFileSync("private_key.pem", "utf8");
+const publicKey = fs.readFileSync("public_key.pem", "utf8");
+
+const signature = crypto.sign(algorithm, data , privateKey);
+console.log(signature.toString('base64'))
+
+const isVerified = crypto.verify(algorithm, data, publicKey, signature);
+console.log(`Is signature verified: ${isVerified}`);
 
 function comprovarSignature(req){
     return (req.query.name == "over-18" && req.query.format == "basic" && req.query.signature == "0xC05F1284A4C04043379856AAB4B9210FAC7736B36AFD10FD245E5DD0199281E0" /*&& crypto.verify("SHA256", data, req.query.publicKey, req.query.userSignature)*/)
